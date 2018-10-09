@@ -5,35 +5,33 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.braintreepayments.api.BraintreeFragment;
-import com.braintreepayments.api.exceptions.BraintreeError;
+import com.braintreepayments.api.PayPal;
 import com.braintreepayments.api.exceptions.ErrorWithResponse;
-import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.interfaces.BraintreeCancelListener;
 import com.braintreepayments.api.interfaces.BraintreeErrorListener;
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
+import com.braintreepayments.api.models.PayPalAccountNonce;
+import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.facebook.react.bridge.ActivityEventListener;
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 
 public class RNPaypalModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
   private static final String TAG = "RNPaypal";
 
-  private String token;
-
-  private final ReactApplicationContext reactContext;
-
   private BraintreeFragment mBraintreeFragment;
 
-  private Callback successCallback;
-  private Callback errorCallback;
+  private Promise promise;
 
   public RNPaypalModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    this.reactContext = reactContext;
   }
 
   @Override
@@ -41,16 +39,8 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     return TAG;
   }
 
-  public String getToken() {
-    return this.token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
   @ReactMethod
-  public void setup(final String token, final Callback successCallback, final Callback errorCallback) {
+  public void setup(final String token, final String urlscheme, final Promise promise) {
     try {
       this.mBraintreeFragment = BraintreeFragment.newInstance(getCurrentActivity(), token);
       this.mBraintreeFragment.addListener(new BraintreeCancelListener() {
@@ -70,28 +60,55 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
         public void onError(Exception error) {
           if (error instanceof ErrorWithResponse) {
             ErrorWithResponse errorWithResponse = (ErrorWithResponse) error;
-            BraintreeError cardErrors = errorWithResponse.errorFor("creditCard");
-            if (cardErrors != null) {
-              // FIXME add error handling
-            } else {
-              nonceErrorCallback(errorWithResponse.getErrorResponse());
-            }
+            nonceErrorCallback(errorWithResponse.getErrorResponse());
           }
         }
       });
-      this.setToken(token);
-      successCallback.invoke(this.getToken());
-    } catch (InvalidArgumentException e) {
-      errorCallback.invoke(e.getMessage());
+      promise.resolve(null);
+    } catch (Exception e) {
+      promise.reject(e);
     }
   }
 
-  public void nonceCallback(PaymentMethodNonce nonce) {
-    this.successCallback.invoke(nonce);
+  @ReactMethod
+  public void requestOneTimePayment(final ReadableMap options, final Promise promise) {
+    this.promise = promise;
+
+    PayPalRequest request = new PayPalRequest(options.getString("amount"))
+        .intent(PayPalRequest.INTENT_AUTHORIZE);
+
+    if (options.hasKey("currencyCode"))
+        request.currencyCode(options.getString("currencyCode"));
+    if (options.hasKey("localeCode"))
+        request.localeCode(options.getString("localeCode"));
+    if (options.hasKey("shippingAddressRequired"))
+        request.shippingAddressRequired(options.getBoolean("shippingAddressRequired"));
+
+    if (options.hasKey("useraction") &&
+        PayPalRequest.USER_ACTION_COMMIT.equals(options.getString("useraction")))
+      request.userAction(PayPalRequest.USER_ACTION_COMMIT);
+
+    PayPal.requestOneTimePayment(mBraintreeFragment, request);
+  }
+
+  public void nonceCallback(PaymentMethodNonce paymentMethodNonce) {
+    WritableMap result = Arguments.createMap();
+    result.putString("nonce", paymentMethodNonce.getNonce());
+    if (paymentMethodNonce instanceof PayPalAccountNonce) {
+      PayPalAccountNonce payPalAccountNonce = (PayPalAccountNonce)paymentMethodNonce;
+      // Access additional information
+      result.putString("payerId", payPalAccountNonce.getPayerId());
+      result.putString("email", payPalAccountNonce.getEmail());
+      result.putString("firstName", payPalAccountNonce.getFirstName());
+      result.putString("lastName", payPalAccountNonce.getLastName());
+      result.putString("phone", payPalAccountNonce.getPhone());
+    }
+
+    this.promise.resolve(result);
   }
 
   public void nonceErrorCallback(String error) {
-    this.errorCallback.invoke(error);
+    this.promise.reject(TAG, error);
   }
 
   @Override
