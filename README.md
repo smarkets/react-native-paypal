@@ -7,7 +7,8 @@
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-paypal`
+1. `$ react-native link react-native-paypal`
+2. Add `pod Braintree` to your Podfile and run `pod install`.
 
 ### Manual installation
 
@@ -31,7 +32,7 @@
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-paypal')
+      implementation project(':react-native-paypal')
   	```
 
 

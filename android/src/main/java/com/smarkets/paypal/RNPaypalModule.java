@@ -1,5 +1,5 @@
 
-package com.smarkets;
+package com.smarkets.paypal;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
