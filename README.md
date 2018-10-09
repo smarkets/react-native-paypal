@@ -8,7 +8,7 @@
 ### Mostly automatic installation
 
 1. `$ react-native link react-native-paypal`
-2. Add `pod Braintree` to your Podfile and run `pod install`.
+2. [iOS only] Add `pod Braintree` to your Podfile and run `pod install`.
 
 ### Manual installation
 

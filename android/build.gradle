@@ -3,6 +3,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
 
     dependencies {
@@ -25,7 +28,6 @@ android {
         targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
     }
     lintOptions {
         abortOnError false
@@ -35,13 +37,24 @@ android {
             minifyEnabled false
         }
     }
+
+    lintOptions {
+        disable 'GradleCompatible'
+    }
 }
 
 repositories {
-    mavenCentral()
+  google()
+  jcenter()
+  maven {
+    url "$rootDir/../node_modules/react-native/android"
+    name 'React Native (local)'
+  }
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
+    api 'com.facebook.react:react-native:+'
+
+    compileOnly 'com.braintreepayments.api:braintree:2.+'
 }
   
