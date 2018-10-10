@@ -1,14 +1,19 @@
 
 # react-native-paypal
 
+React Native library that implements PayPal [Checkout](https://developers.braintreepayments.com/guides/paypal/checkout-with-paypal/) flow using purely native code.
+
 ## Getting started
 
 `$ npm install react-native-paypal --save`
 
 ### Mostly automatic installation
 
-1. `$ react-native link react-native-paypal`
-2. [iOS only] Add `pod Braintree` to your Podfile and run `pod install`.
+1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
+2. [iOS] Add `pod 'Braintree'` to your Podfile and run `pod install`. If you want, you can specify a version, e.g. `pod 'Braintree', '~> 4.19.0'.
+3. [Android] Add `implementation "com.braintreepayments.api:braintree:2.17.0"` in `android/app/build.gradle`.
+
+At this point you should be able to build both Android and iOS.
 
 ### Manual installation
 
@@ -37,10 +42,28 @@
 
 
 ## Usage
-```javascript
-import RNPaypal from 'react-native-paypal';
 
-// TODO: What to do with the module?
-RNPaypal;
+First you need to get a valid token from your server. Refer to [this](https://developers.braintreepayments.com/start/hello-client/ios/v3#get-a-client-token).
+
+Then you can execute the following code, for example reacting to the pressure of a button.
+
+```javascript
+import { setup, requestOneTimePayment } from 'react-native-paypal';
+
+await setup(token);
+const {
+	nonce,
+	payerId,
+	email,
+	firstName,
+	lastName,
+	phone
+} = await requestOneTimePayment({
+	amount: '5', // required
+	currency: 'GBP', // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
+	localeCode: 'en_GB', // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
+	shippingAddressRequired: false,
+	userAction: 'commit', // display 'Pay Now' on the PayPal review page
+});
 ```
-  
+
