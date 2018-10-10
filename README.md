@@ -43,7 +43,7 @@ At this point you should be able to build both Android and iOS.
 
 First you need to get a valid token from your server. Refer to [this](https://developers.braintreepayments.com/start/hello-client/ios/v3#get-a-client-token).
 
-Then you can execute the following code, for example reacting to the pressure of a button.
+Then you can execute the following code, for example reacting to a button press.
 
 ```javascript
 import { setup, requestOneTimePayment } from 'react-native-paypal';

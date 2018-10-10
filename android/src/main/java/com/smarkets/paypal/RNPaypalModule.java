@@ -26,7 +26,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
 
   private static final String TAG = "RNPaypal";
 
-  private BraintreeFragment mBraintreeFragment;
+  private BraintreeFragment braintreeFragment;
 
   private Promise promise;
 
@@ -42,20 +42,20 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
   @ReactMethod
   public void setup(final String token, final String urlscheme, final Promise promise) {
     try {
-      this.mBraintreeFragment = BraintreeFragment.newInstance(getCurrentActivity(), token);
-      this.mBraintreeFragment.addListener(new BraintreeCancelListener() {
+      this.braintreeFragment = BraintreeFragment.newInstance(getCurrentActivity(), token);
+      this.braintreeFragment.addListener(new BraintreeCancelListener() {
         @Override
         public void onCancel(int requestCode) {
           promise.reject("user_cancellation", "User cancelled one time payment");
         }
       });
-      this.mBraintreeFragment.addListener(new PaymentMethodNonceCreatedListener() {
+      this.braintreeFragment.addListener(new PaymentMethodNonceCreatedListener() {
         @Override
         public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
           nonceCallback(paymentMethodNonce);
         }
       });
-      this.mBraintreeFragment.addListener(new BraintreeErrorListener() {
+      this.braintreeFragment.addListener(new BraintreeErrorListener() {
         @Override
         public void onError(Exception error) {
           if (error instanceof ErrorWithResponse) {
@@ -88,7 +88,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
         PayPalRequest.USER_ACTION_COMMIT.equals(options.getString("userAction")))
       request.userAction(PayPalRequest.USER_ACTION_COMMIT);
 
-    PayPal.requestOneTimePayment(mBraintreeFragment, request);
+    PayPal.requestOneTimePayment(braintreeFragment, request);
   }
 
   public void nonceCallback(PaymentMethodNonce paymentMethodNonce) {
