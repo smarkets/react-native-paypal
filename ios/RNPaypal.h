@@ -5,7 +5,9 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
+#import "BraintreeCore.h"
 #import "BraintreePaypal.h"
+#import "BraintreeUI.h"
 
 @interface RNPaypal : UIViewController <RCTBridgeModule, BTDropInViewControllerDelegate, BTViewControllerPresentingDelegate>
 

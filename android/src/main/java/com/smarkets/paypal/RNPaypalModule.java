@@ -46,7 +46,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
       this.mBraintreeFragment.addListener(new BraintreeCancelListener() {
         @Override
         public void onCancel(int requestCode) {
-          nonceErrorCallback("USER_CANCELLATION");
+          nonceErrorCallback("user_cancellation");
         }
       });
       this.mBraintreeFragment.addListener(new PaymentMethodNonceCreatedListener() {
@@ -84,8 +84,8 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     if (options.hasKey("shippingAddressRequired"))
         request.shippingAddressRequired(options.getBoolean("shippingAddressRequired"));
 
-    if (options.hasKey("useraction") &&
-        PayPalRequest.USER_ACTION_COMMIT.equals(options.getString("useraction")))
+    if (options.hasKey("userAction") &&
+        PayPalRequest.USER_ACTION_COMMIT.equals(options.getString("userAction")))
       request.userAction(PayPalRequest.USER_ACTION_COMMIT);
 
     PayPal.requestOneTimePayment(mBraintreeFragment, request);
