@@ -55,6 +55,6 @@ repositories {
 dependencies {
     api 'com.facebook.react:react-native:+'
 
-    implementation 'com.braintreepayments.api:braintree:2.+'
+    compileOnly 'com.braintreepayments.api:braintree:2.17.0'
 }
   
