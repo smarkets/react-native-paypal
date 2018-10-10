@@ -46,7 +46,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
       this.mBraintreeFragment.addListener(new BraintreeCancelListener() {
         @Override
         public void onCancel(int requestCode) {
-          nonceErrorCallback("user_cancellation");
+          promise.reject("user_cancellation", "User cancelled one time payment");
         }
       });
       this.mBraintreeFragment.addListener(new PaymentMethodNonceCreatedListener() {
@@ -60,13 +60,13 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
         public void onError(Exception error) {
           if (error instanceof ErrorWithResponse) {
             ErrorWithResponse errorWithResponse = (ErrorWithResponse) error;
-            nonceErrorCallback(errorWithResponse.getErrorResponse());
+            promise.reject("request_one_time_payment_error", errorWithResponse.getErrorResponse());
           }
         }
       });
       promise.resolve(null);
     } catch (Exception e) {
-      promise.reject(e);
+      promise.reject("braintree_sdk_setup_failed", e);
     }
   }
 
@@ -105,10 +105,6 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     }
 
     this.promise.resolve(result);
-  }
-
-  public void nonceErrorCallback(String error) {
-    this.promise.reject(TAG, error);
   }
 
   @Override

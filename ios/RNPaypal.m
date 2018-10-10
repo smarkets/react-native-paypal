@@ -28,7 +28,7 @@ RCT_EXPORT_METHOD(setup:(NSString *)clientToken
     self.braintreeClient = [[BTAPIClient alloc] initWithAuthorization:clientToken];
     if (self.braintreeClient == nil) {
         NSError *error = [NSError errorWithDomain:@"RNPayPal" code:1 userInfo:nil];
-        reject(@"init_failed", @"Could not initialize Braintree SDK", error);
+        reject(@"braintree_sdk_setup_failed", @"Could not initialize Braintree SDK", error);
         return;
     }
     resolve(nil);
