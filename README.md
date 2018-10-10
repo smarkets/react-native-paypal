@@ -1,4 +1,3 @@
-
 # react-native-paypal
 
 React Native library that implements PayPal [Checkout](https://developers.braintreepayments.com/guides/paypal/checkout-with-paypal/) flow using purely native code.
@@ -10,7 +9,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 ### Mostly automatic installation
 
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
-2. [iOS] Add `pod 'Braintree'` to your Podfile and run `pod install`. If you want, you can specify a version, e.g. `pod 'Braintree', '~> 4.19.0'.
+2. [iOS] Add `pod 'Braintree'` to your Podfile and run `pod install`. If you want, you can specify a version, e.g. `pod 'Braintree', '~> 4.19.0'`.
 3. [Android] Add `implementation "com.braintreepayments.api:braintree:2.17.0"` in `android/app/build.gradle`.
 
 At this point you should be able to build both Android and iOS.
@@ -23,7 +22,6 @@ At this point you should be able to build both Android and iOS.
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-paypal` and add `RNPaypal.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNPaypal.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
 
 #### Android
 
