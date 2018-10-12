@@ -2,7 +2,6 @@
 #import "RNPaypal.h"
 
 @implementation RNPaypal {
-    bool runCallback;
 }
 
 static NSString *URLScheme;
@@ -14,6 +13,12 @@ static NSString *URLScheme;
         _sharedInstance = [[RNPaypal alloc] init];
     });
     return _sharedInstance;
+}
+
+// see https://github.com/facebook/react-native/blob/v0.57.1/React/Base/RCTBridgeModule.h
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
 }
 
 RCT_EXPORT_MODULE()
@@ -40,6 +45,7 @@ RCT_EXPORT_METHOD(requestOneTimePayment:(NSDictionary*)options resolve:(RCTPromi
         
         BTPayPalDriver *payPalDriver = [[BTPayPalDriver alloc] initWithAPIClient:self.braintreeClient];
         payPalDriver.viewControllerPresentingDelegate = self;
+        payPalDriver.appSwitchDelegate = self;
         
         BTPayPalRequest *request= [[BTPayPalRequest alloc] initWithAmount:options[@"amount"]];
         NSString* currency = options[@"currency"];
@@ -73,6 +79,26 @@ RCT_EXPORT_METHOD(requestOneTimePayment:(NSDictionary*)options resolve:(RCTPromi
             }
         }];
     });
+}
+
+- (BOOL)application:(UIApplication *)application
+    openURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication 
+    annotation:(id)annotation
+{
+    if ([url.scheme localizedCaseInsensitiveCompare:URLScheme] == NSOrderedSame) {
+        return [BTAppSwitch handleOpenURL:url sourceApplication:sourceApplication];
+    }
+    return NO;
+}
+
+
+- (void)paymentDriver:(__unused id)driver requestsPresentationOfViewController:(UIViewController *)viewController {
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)paymentDriver:(__unused id)driver requestsDismissalOfViewController:(UIViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
