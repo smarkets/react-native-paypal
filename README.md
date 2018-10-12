@@ -16,10 +16,11 @@ React Native library that implements PayPal [Checkout](https://developers.braint
     ```objc
     #import "RNPaypal.h"
 
-		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-		{
-  		[[RNPaypal sharedInstance] configure];
-		}
+    - (BOOL)application:(UIApplication *)application 
+      didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+    {
+      [[RNPaypal sharedInstance] configure];
+    }
 
     - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
       sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -73,12 +74,13 @@ const {
 	lastName,
 	phone
 } = await requestOneTimePayment(
-	token,
-	{
-		amount: '5', // required
-		currency: 'GBP', // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
-		localeCode: 'en_GB', // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
-		shippingAddressRequired: false,
-		userAction: 'commit', // display 'Pay Now' on the PayPal review page
-	});
+  token,
+  {
+    amount: '5', // required
+    currency: 'GBP', // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
+    localeCode: 'en_GB', // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
+    shippingAddressRequired: false,
+    userAction: 'commit', // display 'Pay Now' on the PayPal review page
+  }
+);
 ```
