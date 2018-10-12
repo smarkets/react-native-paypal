@@ -46,7 +46,7 @@ RCT_EXPORT_METHOD(requestOneTimePayment:(NSDictionary*)options resolve:(RCTPromi
         if (currency) request.currencyCode = currency;
         NSString* localeCode = options[@"localeCode"];
         if (localeCode) request.localeCode = localeCode;
-        BOOL shippingAddressRequired = options[@"shippingAddressRequired"];
+        BOOL shippingAddressRequired = [options[@"shippingAddressRequired"] boolValue];
         if (shippingAddressRequired) request.shippingAddressRequired = shippingAddressRequired;
         NSString* userAction = options[@"userAction"];
         if (userAction && [@"commit" isEqualToString:userAction]) request.userAction = BTPayPalRequestUserActionCommit;
