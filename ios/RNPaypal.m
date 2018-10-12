@@ -23,27 +23,21 @@ static NSString *URLScheme;
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(setup:(NSString *)clientToken
-                  urlscheme:(NSString*)urlscheme
-                  resolve:(RCTPromiseResolveBlock)resolve
-                  reject:(RCTPromiseRejectBlock)reject)
-{
-    URLScheme = urlscheme;
-    [BTAppSwitch setReturnURLScheme:urlscheme];
-    self.braintreeClient = [[BTAPIClient alloc] initWithAuthorization:clientToken];
-    if (self.braintreeClient == nil) {
-        NSError *error = [NSError errorWithDomain:@"RNPayPal" code:1 userInfo:nil];
-        reject(@"braintree_sdk_setup_failed", @"Could not initialize Braintree SDK", error);
-        return;
-    }
-    resolve(nil);
-}
-
-RCT_EXPORT_METHOD(requestOneTimePayment:(NSDictionary*)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(
+    requestOneTimePayment:(NSString *)clientToken 
+    options:(NSDictionary*)options 
+    resolve:(RCTPromiseResolveBlock)resolve 
+    reject:(RCTPromiseRejectBlock)reject)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        BTPayPalDriver *payPalDriver = [[BTPayPalDriver alloc] initWithAPIClient:self.braintreeClient];
+        BTAPIClient* braintreeClient = [[BTAPIClient alloc] initWithAuthorization:clientToken];
+        if (braintreeClient == nil) {
+            NSError *error = [NSError errorWithDomain:@"RNPayPal" code:1 userInfo:nil];
+            reject(@"braintree_sdk_setup_failed", @"Could not initialize Braintree SDK", error);
+            return;
+        }
+
+        BTPayPalDriver *payPalDriver = [[BTPayPalDriver alloc] initWithAPIClient:braintreeClient];
         payPalDriver.viewControllerPresentingDelegate = self;
         payPalDriver.appSwitchDelegate = self;
         
@@ -92,6 +86,12 @@ RCT_EXPORT_METHOD(requestOneTimePayment:(NSDictionary*)options resolve:(RCTPromi
     return NO;
 }
 
+- (void)configure {
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *urlscheme = [NSString stringWithFormat:@"%@.payments", bundleIdentifier];
+    URLScheme = urlscheme;
+    [BTAppSwitch setReturnURLScheme:urlscheme];
+}
 
 - (void)paymentDriver:(__unused id)driver requestsPresentationOfViewController:(UIViewController *)viewController {
     [self presentViewController:viewController animated:YES completion:nil];

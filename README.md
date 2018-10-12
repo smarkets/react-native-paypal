@@ -11,10 +11,15 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
 1. [Android] Add `implementation "com.braintreepayments.api:braintree:2.17.0"` in `android/app/build.gradle`.
 1. [iOS] Add `pod 'Braintree'` to your Podfile and run `pod install`. If you want, you can specify a version, e.g. `pod 'Braintree', '~> 4.19.0'`.
-1. [iOS] Register a URL scheme in Xcode (must always start with your Bundle Identifier). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
+1. [iOS] Register a URL scheme in Xcode (**must** always start with your Bundle Identifier and end in `.payments` - e.g. `your.app.id.payments`). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
 1. [iOS] Edit your `AppDelegate.m` as follows:
     ```objc
     #import "RNPaypal.h"
+
+		- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+		{
+  		[[RNPaypal sharedInstance] configure];
+		}
 
     - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
       sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -58,10 +63,8 @@ First you need to get a valid token from your server. Refer to [this](https://de
 Then you can execute the following code, for example reacting to a button press.
 
 ```javascript
-import { Platform } from 'react-native';
-import { setup, requestOneTimePayment } from 'react-native-paypal';
+import { requestOneTimePayment } from 'react-native-paypal';
 
-await setup(token, Platform.OS === 'ios' && 'your.app.bundle.identifiers.payments' || null);
 const {
 	nonce,
 	payerId,
@@ -69,12 +72,13 @@ const {
 	firstName,
 	lastName,
 	phone
-} = await requestOneTimePayment({
-	amount: '5', // required
-	currency: 'GBP', // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
-	localeCode: 'en_GB', // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
-	shippingAddressRequired: false,
-	userAction: 'commit', // display 'Pay Now' on the PayPal review page
-});
+} = await requestOneTimePayment(
+	token,
+	{
+		amount: '5', // required
+		currency: 'GBP', // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
+		localeCode: 'en_GB', // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
+		shippingAddressRequired: false,
+		userAction: 'commit', // display 'Pay Now' on the PayPal review page
+	});
 ```
-

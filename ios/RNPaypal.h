@@ -10,9 +10,9 @@
 
 @interface RNPaypal : UIViewController <RCTBridgeModule, BTAppSwitchDelegate, BTViewControllerPresentingDelegate>
 
-@property (nonatomic, strong) BTAPIClient *braintreeClient;
-
 + (instancetype)sharedInstance;
+
+- (void)configure;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
 @end
