@@ -6,10 +6,10 @@
 #endif
 
 #import "BraintreeCore.h"
-#import "BraintreePaypal.h"
+#import "BraintreePayPal.h"
 #import "BraintreeUI.h"
 
-@interface RNPaypal : UIViewController <RCTBridgeModule, BTDropInViewControllerDelegate, BTViewControllerPresentingDelegate>
+@interface RNPaypal : UIViewController <RCTBridgeModule, BTAppSwitchDelegate, BTViewControllerPresentingDelegate>
 
 @property (nonatomic, strong) BTAPIClient *braintreeClient;
 @property (nonatomic, strong) UIViewController *reactRoot;
@@ -20,4 +20,3 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 
 @end
-  
