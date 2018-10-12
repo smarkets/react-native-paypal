@@ -2,17 +2,23 @@
 {
   "name": "react-native-paypal",
   "version": "1.0.0",
-  "description": "",
+  "description": "React Native library that implements PayPal Checkout flow using purely native code",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "react-native",
-    "paypal"
+    "paypal",
+    "checkout",
+    "paypal-checkout",
+    "braintree",
+    "android",
+    "ios",
+    "payment"
   ],
-  "author": "",
-  "license": "",
+  "author": "Smarkets Ltd",
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
   }
