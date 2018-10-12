@@ -4,7 +4,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 
 ## Getting started
 
-`$ npm install react-native-paypal --save`
+`$ npm install smarkets/react-native-paypal --save`
 
 ### Mostly automatic installation
 
