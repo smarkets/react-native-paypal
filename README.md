@@ -2,6 +2,8 @@
 
 React Native library that implements PayPal [Checkout](https://developers.braintreepayments.com/guides/paypal/checkout-with-paypal/) flow using purely native code.
 
+![Demo](https://smrkts.co/2yqrDKT)
+
 ## Getting started
 
 `$ npm install smarkets/react-native-paypal --save`
