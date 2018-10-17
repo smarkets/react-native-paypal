@@ -1,5 +1,10 @@
 # react-native-paypal
 
+[![npm version](https://img.shields.io/npm/v/react-native-paypal.svg)](https://www.npmjs.com/package/react-native-paypal)
+![npm](https://img.shields.io/npm/dm/react-native-paypal.svg)
+[![GitHub license](https://img.shields.io/github/license/smarkets/react-native-paypal.svg)](https://github.com/smarkets/react-native-paypal/blob/master/LICENSE)
+
+
 React Native library that implements PayPal [Checkout](https://developers.braintreepayments.com/guides/paypal/checkout-with-paypal/) flow using purely native code.
 
 ![Demo](https://smrkts.co/2yqrDKT)
