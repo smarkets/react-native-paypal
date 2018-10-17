@@ -50,6 +50,13 @@ RCT_EXPORT_METHOD(
         if (shippingAddressRequired) request.shippingAddressRequired = shippingAddressRequired;
         NSString* userAction = options[@"userAction"];
         if (userAction && [@"commit" isEqualToString:userAction]) request.userAction = BTPayPalRequestUserActionCommit;
+        NSString* intent = options[@"intent"];
+        if (intent) {
+            if ([@"sale" isEqualToString:intent])
+                request.intent = BTPayPalRequestIntentSale;
+            else if ([@"order" isEqualToString:intent])
+                request.intent = BTPayPalRequestIntentOrder;
+        }
         
         [payPalDriver requestOneTimePayment:request completion:^(BTPayPalAccountNonce * _Nullable tokenizedPayPalAccount, NSError * _Nullable error) {
             if (tokenizedPayPalAccount) {
