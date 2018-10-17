@@ -63,6 +63,17 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
         PayPalRequest.USER_ACTION_COMMIT.equals(options.getString("userAction")))
       request.userAction(PayPalRequest.USER_ACTION_COMMIT);
 
+    if (options.hasKey("intent")) {
+      String intent = options.getString("intent");
+      switch (intent) {
+        case PayPalRequest.INTENT_SALE:
+          request.intent(PayPalRequest.INTENT_SALE);
+          break;
+        case PayPalRequest.INTENT_ORDER:
+          request.intent(PayPalRequest.INTENT_ORDER);
+      }
+    }
+
     PayPal.requestOneTimePayment(braintreeFragment, request);
   }
 
