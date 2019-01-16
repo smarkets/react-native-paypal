@@ -50,8 +50,8 @@ At this point you should be able to build both Android and iOS.
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.smarkets.RNPaypalPackage;` to the imports at the top of the file
+1. Open up `android/app/src/main/java/[...]/MainApplication.java`
+  - Add `import com.smarkets.paypal.RNPaypalPackage;` to the imports at the top of the file
   - Add `new RNPaypalPackage()` to the list returned by the `getPackages()` method
 1. Append the following lines to `android/settings.gradle`:
   	```
