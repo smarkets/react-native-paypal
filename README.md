@@ -11,7 +11,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 
 ## Getting started
 
-`$ npm install react-native-paypal --save` or `$ yarn install react-native-paypal`
+`$ npm install react-native-paypal --save` or `$ yarn add react-native-paypal`
 
 ### Mostly automatic installation
 
@@ -47,6 +47,7 @@ At this point you should be able to build both Android and iOS.
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 1. Go to `node_modules` ➜ `react-native-paypal` and add `RNPaypal.xcodeproj`
 1. In XCode, in the project navigator, select your project. Add `libRNPaypal.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
+1. In XCode, in the project navigator, select your project. Add `$(SRCROOT)/../node_modules/react-native-paypal/ios` to your project's `Build Settings` ➜ `Header Search Paths`
 
 #### Android
 
