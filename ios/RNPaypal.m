@@ -93,6 +93,16 @@ RCT_EXPORT_METHOD(
     return NO;
 }
 
+- (BOOL)application:(UIApplication *)application
+    openURL:(NSURL *)url
+    options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    if ([url.scheme localizedCaseInsensitiveCompare:URLScheme] == NSOrderedSame) {
+        return [BTAppSwitch handleOpenURL:url options:options];
+    }
+    return NO;
+}
+
 - (void)configure {
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     NSString *urlscheme = [NSString stringWithFormat:@"%@.payments", bundleIdentifier];
