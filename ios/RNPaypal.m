@@ -44,6 +44,8 @@ RCT_EXPORT_METHOD(
         BTPayPalRequest *request= [[BTPayPalRequest alloc] initWithAmount:options[@"amount"]];
         NSString* currency = options[@"currency"];
         if (currency) request.currencyCode = currency;
+        NSString* displayName = options[@"displayName"];
+        if (displayName) request.displayName = displayName;
         NSString* localeCode = options[@"localeCode"];
         if (localeCode) request.localeCode = localeCode;
         BOOL shippingAddressRequired = [options[@"shippingAddressRequired"] boolValue];

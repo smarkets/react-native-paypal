@@ -55,6 +55,8 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
 
     if (options.hasKey("currency"))
         request.currencyCode(options.getString("currency"));
+    if (options.hasKey("displayName"))
+        request.displayName(options.getString("displayName"));
     if (options.hasKey("localeCode"))
         request.localeCode(options.getString("localeCode"));
     if (options.hasKey("shippingAddressRequired"))
