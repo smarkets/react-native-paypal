@@ -96,7 +96,7 @@ RCT_EXPORT_METHOD(
             return;
         }
 
-        if (NSString* options[@"billingAgreementDescription"] == nil) {
+        if (options[@"billingAgreementDescription"] == nil) {
             NSError *error = [NSError errorWithDomain:@"RNPayPal" code:1 userInfo:nil];
             reject(@"braintree_sdk_setup_failed", @"billingAgreementDescription prop is required", error);
             return;
