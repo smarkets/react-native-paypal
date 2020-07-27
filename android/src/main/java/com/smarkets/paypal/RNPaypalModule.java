@@ -119,7 +119,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
   }
 
   @ReactMethod
-  public void requestVaultPayment(
+  public void requestBillingAgreement(
           final String token,
           final ReadableMap options,
           final Promise promise
