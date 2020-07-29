@@ -118,6 +118,34 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     return braintreeFragment;
   }
 
+  @ReactMethod
+  public void requestBillingAgreement(
+          final String token,
+          final ReadableMap options,
+          final Promise promise
+  ) {
+    BraintreeFragment braintreeFragment = null;
+
+    try {
+      if (!options.hasKey("billingAgreementDescription")) throw new Exception("billingAgreementDescription prop is required");
+
+      braintreeFragment = initializeBraintreeFragment(token, promise);
+    } catch (Exception e) {
+      promise.reject("braintree_sdk_setup_failed", e);
+      return;
+    }
+
+    PayPalRequest request = new PayPalRequest()
+        .billingAgreementDescription(options.getString("billingAgreementDescription"));
+
+    if (options.hasKey("currency"))
+      request.currencyCode(options.getString("currency"));
+    if (options.hasKey("localeCode"))
+      request.localeCode(options.getString("localeCode"));
+
+    PayPal.requestBillingAgreement(braintreeFragment, request);
+  }
+
   @Override
   public void onActivityResult(Activity activity, final int requestCode, final int resultCode, final Intent data) {
 

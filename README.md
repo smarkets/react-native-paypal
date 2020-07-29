@@ -80,7 +80,7 @@ First you need to get a valid token from your server. Refer to [this](https://de
 Then you can execute the following code, for example reacting to a button press.
 
 ```javascript
-import { requestOneTimePayment } from 'react-native-paypal';
+import { requestOneTimePayment } from 'react-native-paypal'; 
 
 const {
 	nonce,

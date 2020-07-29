@@ -6,4 +6,5 @@ const { RNPaypal } = NativeModules;
 export default RNPaypal;
 export const {
   requestOneTimePayment,
+  requestBillingAgreement,
 } = RNPaypal;
