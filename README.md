@@ -17,7 +17,9 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
 1. [Android] Add `implementation "com.braintreepayments.api:braintree:2.17.0"` in `android/app/build.gradle`.
-1. [iOS] Add `pod 'Braintree'` to your Podfile and run `pod install`. If you want, you can specify a version, e.g. `pod 'Braintree', '~> 4.19.0'`.
+1. [iOS] Add `pod 'Braintree', '~> 4.19.0'` to your Podfile.
+1. [iOS] Change the RNPaypal entry in your Podfile to `pod 'RNPaypal', :path => '../node_modules/react-native-paypal/ios'`
+1. [iOS] Run `pod install`
 1. [iOS] Register a URL scheme in Xcode (**must** always start with your Bundle Identifier and end in `.payments` - e.g. `your.app.id.payments`). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
 1. [iOS] Edit your `AppDelegate.m` as follows:
     ```objc
@@ -80,8 +82,9 @@ First you need to get a valid token from your server. Refer to [this](https://de
 Then you can execute the following code, for example reacting to a button press.
 
 ```javascript
-import { requestOneTimePayment } from 'react-native-paypal'; 
+import { requestOneTimePayment, requestBillingAgreement } from 'react-native-paypal'; 
 
+// For one time payments
 const {
 	nonce,
 	payerId,
@@ -101,6 +104,25 @@ const {
     userAction: 'commit', // display 'Pay Now' on the PayPal review page
     // one of 'authorize', 'sale', 'order'. defaults to 'authorize'. see details here: https://developer.paypal.com/docs/api/payments/v1/#payment-create-request-body
     intent: 'authorize', 
+  }
+);
+
+// For vaulting paypal account see: https://developers.braintreepayments.com/guides/paypal/vault
+const {
+	nonce,
+	payerId,
+	email,
+	firstName,
+	lastName,
+	phone
+} = await requestBillingAgreement(
+  token,
+  {
+    billingAgreementDescription: 'Your agreement description', // required
+    // any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
+    currency: 'GBP',
+    // any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
+    localeCode: 'en_GB',
   }
 );
 ```
