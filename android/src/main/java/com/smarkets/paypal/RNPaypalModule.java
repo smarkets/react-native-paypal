@@ -4,6 +4,7 @@ package com.smarkets.paypal;
 import android.app.Activity;
 import android.content.Intent;
 
+import androidx.fragment.app.FragmentActivity;
 import com.braintreepayments.api.BraintreeFragment;
 import com.braintreepayments.api.PayPal;
 import com.braintreepayments.api.exceptions.ErrorWithResponse;
@@ -80,7 +81,14 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
   protected BraintreeFragment initializeBraintreeFragment(
       final String token,
       final Promise promise) throws InvalidArgumentException {
-    BraintreeFragment braintreeFragment = BraintreeFragment.newInstance(getCurrentActivity(), token);
+    FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+
+    if (activity == null) {
+      promise.reject("creation_error", "Something went wrong");
+      return null;
+    }
+
+    BraintreeFragment braintreeFragment = BraintreeFragment.newInstance(activity, token);
     braintreeFragment.addListener(new BraintreeCancelListener() {
       @Override
       public void onCancel(int requestCode) {
