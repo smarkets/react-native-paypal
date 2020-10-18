@@ -16,7 +16,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 ### Mostly automatic installation
 
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
-1. [Android] Add `implementation "com.braintreepayments.api:braintree:3.13.0"` in `android/app/build.gradle`.
+1. [Android] Add `implementation "com.braintreepayments.api:braintree:3.14.1"` in `android/app/build.gradle`.
 1. [iOS] Add `pod 'Braintree', '~> 4.35.0'` to your Podfile.
 1. [iOS] Run `pod install`
 1. [iOS] Register a URL scheme in Xcode (**must** always start with your Bundle Identifier and end in `.payments` - e.g. `your.app.id.payments`). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
