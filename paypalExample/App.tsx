@@ -16,7 +16,7 @@ import {
 
 const App = () => {
   // Set token here to not have to paste every time (make sure not to commit!)
-  const [token, setToken] = useState('sandbox_kt6bpyd9_qmb7t4qgzzw5z95d');
+  const [token, setToken] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState<PaypalResponse>({
     nonce: '',
