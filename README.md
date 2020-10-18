@@ -133,4 +133,4 @@ Note that this should be served via a backend service but can be hardcoded:
 3. You can find your token under `Tokenization Keys`.  You will need to create one if none exists
 
 ## Troubleshooting
-Be sure to check native code logs (in xcode for ios or `logcat` with ios).  They may give additional information about issues
+Be sure to check native code logs (in xcode for ios or `adb logcat *:E` with ios).  They may give additional information about issues
