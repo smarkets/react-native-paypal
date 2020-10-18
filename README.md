@@ -16,7 +16,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 ### Mostly automatic installation
 
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
-1. [Android] Add `implementation "com.braintreepayments.api:braintree:3.13.0"` in `android/app/build.gradle`.
+1. [Android] Add `implementation "com.braintreepayments.api:braintree:3.14.1"` in `android/app/build.gradle`.
 1. [iOS] Add `pod 'Braintree', '~> 4.35.0'` to your Podfile.
 1. [iOS] Run `pod install`
 1. [iOS] Register a URL scheme in Xcode (**must** always start with your Bundle Identifier and end in `.payments` - e.g. `your.app.id.payments`). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
@@ -125,3 +125,12 @@ const {
   }
 );
 ```
+
+## Creating/Finding client token
+Note that this should be served via a backend service but can be hardcoded:
+1. Go to https://www.braintreegateway.com or https://sandbox.braintreegateway.com/ and login or create an account
+2. Click the gear at the top and select to API
+3. You can find your token under `Tokenization Keys`.  You will need to create one if none exists
+
+## Troubleshooting
+Be sure to check native code logs (in xcode for ios or `adb logcat *:E` with ios).  They may give additional information about issues

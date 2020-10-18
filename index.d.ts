@@ -54,6 +54,15 @@ export type paypalLocalCodes =
     'zh_TW' |
     'zh_XC'
 
+export interface PaypalResponse {
+    nonce: string,
+    payerId: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    phone: string
+}
+
 declare function requestOneTimePayment(token: string, {
     amount,
     currency,
@@ -68,14 +77,7 @@ declare function requestOneTimePayment(token: string, {
     shippingAddressRequired ? : boolean,
     userAction ? : 'commit' | 'continue',
     intent ? : 'sale' | 'authorize' | 'order',
-}): Promise < {
-    nonce: string,
-    payerId: string,
-    email: string,
-    firstName: string,
-    lastName: string,
-    phone: string
-} > ;
+}): Promise <PaypalResponse> ;
 
 declare function requestBillingAgreement(token: string, {
     billingAgreementDescription,
@@ -85,11 +87,4 @@ declare function requestBillingAgreement(token: string, {
     billingAgreementDescription: string,
     currency ? : paypalSupportedCurrencies,
     localeCode ? : paypalLocalCodes,
-}): Promise < {
-    nonce: string,
-    payerId: string,
-    email: string,
-    firstName: string,
-    lastName: string,
-    phone: string
-} > ;
+}): Promise <PaypalResponse> ;
