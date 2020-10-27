@@ -7,4 +7,5 @@ export default RNPaypal;
 export const {
   requestOneTimePayment,
   requestBillingAgreement,
+  requestDeviceData,
 } = RNPaypal;

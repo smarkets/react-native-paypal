@@ -33,4 +33,5 @@ target 'paypalExample-tvOS' do
 end
 
 pod 'Braintree', '~> 4.35.0'
+pod 'Braintree/DataCollector'
 pod 'RNPaypal', :path => '../node_modules/react-native-paypal'

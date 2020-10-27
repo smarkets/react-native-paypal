@@ -63,6 +63,10 @@ export interface PaypalResponse {
     phone: string
 }
 
+export interface DeviceDataResponse {
+    deviceData: string
+}
+
 declare function requestOneTimePayment(token: string, {
     amount,
     currency,
@@ -88,3 +92,5 @@ declare function requestBillingAgreement(token: string, {
     currency ? : paypalSupportedCurrencies,
     localeCode ? : paypalLocalCodes,
 }): Promise <PaypalResponse> ;
+
+declare function requestDeviceData(token: string): Promise <DeviceDataResponse> ;

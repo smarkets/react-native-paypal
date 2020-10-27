@@ -187,6 +187,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "com.braintreepayments.api:braintree:3.14.1"
+    implementation "com.braintreepayments.api:data-collector:3.+"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
