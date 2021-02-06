@@ -6,11 +6,13 @@ import android.content.Intent;
 
 import androidx.fragment.app.FragmentActivity;
 import com.braintreepayments.api.BraintreeFragment;
+import com.braintreepayments.api.DataCollector;
 import com.braintreepayments.api.PayPal;
 import com.braintreepayments.api.exceptions.ErrorWithResponse;
 import com.braintreepayments.api.exceptions.InvalidArgumentException;
 import com.braintreepayments.api.interfaces.BraintreeCancelListener;
 import com.braintreepayments.api.interfaces.BraintreeErrorListener;
+import com.braintreepayments.api.interfaces.BraintreeResponseListener;
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.braintreepayments.api.models.PayPalAccountNonce;
 import com.braintreepayments.api.models.PayPalRequest;
@@ -154,6 +156,30 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
       request.localeCode(options.getString("localeCode"));
 
     PayPal.requestBillingAgreement(braintreeFragment, request);
+  }
+
+  @ReactMethod
+  public void requestDeviceData(
+          final String token,
+          final Promise promise
+  ) {
+    BraintreeFragment braintreeFragment = null;
+
+    try {
+      braintreeFragment = initializeBraintreeFragment(token, promise);
+    } catch (Exception e) {
+      promise.reject("braintree_sdk_setup_failed", e);
+      return;
+    }
+
+    DataCollector.collectDeviceData(braintreeFragment, new BraintreeResponseListener<String>() {
+      @Override
+      public void onResponse(String deviceData) {
+        WritableMap result = Arguments.createMap();
+        result.putString("deviceData", deviceData);
+        promise.resolve(result);
+      }
+    });
   }
 
   @Override

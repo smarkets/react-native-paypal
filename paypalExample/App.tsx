@@ -11,6 +11,7 @@ import {
 import {
   requestOneTimePayment,
   requestBillingAgreement,
+  requestDeviceData,
   PaypalResponse,
 } from 'react-native-paypal';
 
@@ -26,6 +27,7 @@ const App = () => {
     lastName: '',
     phone: '',
   });
+  const [deviceData, setDeviceData] = useState('');
   const [amount, setAmount] = useState('10');
   const [
     billingAgreementDescription,
@@ -41,6 +43,12 @@ const App = () => {
     requestBillingAgreement(token, {billingAgreementDescription})
       .then(setSuccess)
       .catch((err) => setError(err.message));
+
+  const requestData = () =>
+    requestDeviceData(token)
+        .then((({ deviceData }) => setDeviceData(deviceData)))
+        .catch((err) => setError(err.message));
+
 
   return (
     <SafeAreaView>
@@ -76,6 +84,10 @@ const App = () => {
             <Text style={styles.buttonText}>Request Billing</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={requestData} style={styles.button}>
+            <Text style={styles.buttonText}>Request Device Data</Text>
+          </TouchableOpacity>
+
           {!!error && <Text style={styles.errorText}>Error: {error}</Text>}
 
           <Text style={styles.sectionTitle}>Response:</Text>
@@ -85,6 +97,7 @@ const App = () => {
           <Text>First Name: {success.firstName}</Text>
           <Text>Last Name: {success.lastName}</Text>
           <Text>Phone: {success.phone}</Text>
+          <Text>deviceData: {deviceData}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
