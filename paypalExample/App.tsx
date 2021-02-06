@@ -37,17 +37,20 @@ const App = () => {
   const requestPayment = () =>
     requestOneTimePayment(token, {amount})
       .then(setSuccess)
+      .then(()=> setError(''))
       .catch((err) => setError(err.message));
 
   const requestBilling = () =>
     requestBillingAgreement(token, {billingAgreementDescription})
       .then(setSuccess)
+      .then(()=> setError(''))
       .catch((err) => setError(err.message));
 
   const requestData = () =>
     requestDeviceData(token)
-        .then((({ deviceData }) => setDeviceData(deviceData)))
-        .catch((err) => setError(err.message));
+      .then((({ deviceData }) => setDeviceData(deviceData)))
+      .then(()=> setError(''))
+      .catch((err) => setError(err.message));
 
 
   return (
