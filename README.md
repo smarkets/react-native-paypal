@@ -17,7 +17,7 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 
 1. `$ react-native link react-native-paypal`. Check the result, if iOS and/or Android project files are unchanged, do the steps described in Manual installation. 
 1. [Android] Add `implementation "com.braintreepayments.api:braintree:3.+"` and `implementation "com.braintreepayments.api:data-collector:3.+"` in `android/app/build.gradle`.
-1. [iOS] Add `pod 'Braintree', '~> 4.35.0'` and `pod 'Braintree/DataCollector'` to your Podfile.
+1. [iOS] Add `pod 'Braintree', '~> 4'` and `pod 'Braintree/DataCollector'` to your Podfile.
 1. [iOS] Run `pod install`
 1. [iOS] Register a URL scheme in Xcode (**must** always start with your Bundle Identifier and end in `.payments` - e.g. `your.app.id.payments`). See details [here](https://developers.braintreepayments.com/guides/paypal/client-side/ios/v4#register-a-url-type).
 1. [iOS] Edit your `AppDelegate.m` as follows:
@@ -125,15 +125,22 @@ const {
   }
 );
 
-// For device data collection see: https://developers.braintreepayments.com/guides/advanced-fraud-management-tools/device-data-collection/javascript/v3
+// For device data collection see: https://developers.braintreepayments.com/guides/advanced-fraud-management-tools/device-data-collection/
 const { deviceData } = await requestDeviceData(token);
 ```
 
 ## Creating/Finding client token
-Note that this should be served via a backend service but can be hardcoded:
+Note that the client token should be served via a backend service but can be hardcoded:
 1. Go to https://www.braintreegateway.com or https://sandbox.braintreegateway.com/ and login or create an account
 2. Click the gear at the top and select to API
 3. You can find your token under `Tokenization Keys`.  You will need to create one if none exists
 
+## Backend implementation
+For an overview of the braintree payment flow see https://developers.braintreepayments.com/start/overview
+This library covers the client setup here: https://developers.braintreepayments.com/start/hello-client
+It does NOT however cover the server portion here: https://developers.braintreepayments.com/start/hello-server
+You will need the server portion in order to complete your transactions
+
 ## Troubleshooting
-Be sure to check native code logs (in xcode for ios or `adb logcat *:E` with ios).  They may give additional information about issues
+* Check native code logs (in xCode for iOS or `adb logcat *:E` for Android).  These may give additional information about issues
+* Try comparing your app implementation to the example app.  It may help you find a step you missed.  If you experience any issues with the example app or instructions missing from the Readme, please open an issue (or fix with a PR :))

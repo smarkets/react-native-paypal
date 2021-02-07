@@ -320,7 +320,7 @@ PODS:
     - React-Core (= 0.63.2)
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
-  - RNPaypal (3.1.1):
+  - RNPaypal (4.0.0):
     - Braintree
     - React
   - Yoga (1.14.0)
@@ -328,7 +328,7 @@ PODS:
     - Yoga (~> 1.14)
 
 DEPENDENCIES:
-  - Braintree (~> 4.35.0)
+  - Braintree (~> 4)
   - Braintree/DataCollector
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -489,10 +489,10 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
-  RNPaypal: ac01980ea29ad4df3b46f99ea58fa290914d734f
+  RNPaypal: 54ceeddf71841ad3c4936c5536f5c670f4a1beac
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 2959c167c0f09e859a1b23b8e604ff6057b91754
+PODFILE CHECKSUM: d5b425b37e628fff904ba091e8ed060231dceec4
 
 COCOAPODS: 1.10.1
