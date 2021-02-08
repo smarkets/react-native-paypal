@@ -29,6 +29,7 @@ import com.facebook.react.bridge.WritableMap;
 public class RNPaypalModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
   private static final String TAG = "RNPaypal";
+  private Promise promise;
 
   public RNPaypalModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -41,12 +42,13 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
 
   @ReactMethod
   public void requestOneTimePayment(
-      final String token,
-      final ReadableMap options,
-      final Promise promise) {
+      String token,
+      ReadableMap options,
+      Promise promise) {
+    this.promise = promise;
     BraintreeFragment braintreeFragment = null;
     try {
-      braintreeFragment = initializeBraintreeFragment(token, promise);
+      braintreeFragment = initializeBraintreeFragment(token);
     } catch (Exception e) {
       promise.reject("braintree_sdk_setup_failed", e);
       return;
@@ -83,8 +85,7 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
   }
 
   protected BraintreeFragment initializeBraintreeFragment(
-      final String token,
-      final Promise promise) throws InvalidArgumentException {
+      String token) throws InvalidArgumentException {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
 
     if (activity == null) {
@@ -132,16 +133,17 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
 
   @ReactMethod
   public void requestBillingAgreement(
-          final String token,
-          final ReadableMap options,
-          final Promise promise
+          String token,
+          ReadableMap options,
+          Promise promise
   ) {
+    this.promise = promise;
     BraintreeFragment braintreeFragment = null;
 
     try {
       if (!options.hasKey("billingAgreementDescription")) throw new Exception("billingAgreementDescription prop is required");
 
-      braintreeFragment = initializeBraintreeFragment(token, promise);
+      braintreeFragment = initializeBraintreeFragment(token);
     } catch (Exception e) {
       promise.reject("braintree_sdk_setup_failed", e);
       return;
