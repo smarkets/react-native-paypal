@@ -165,10 +165,11 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
           final String token,
           final Promise promise
   ) {
+    this.promise = promise;
     BraintreeFragment braintreeFragment = null;
 
     try {
-      braintreeFragment = initializeBraintreeFragment(token, promise);
+      braintreeFragment = initializeBraintreeFragment(token);
     } catch (Exception e) {
       promise.reject("braintree_sdk_setup_failed", e);
       return;
