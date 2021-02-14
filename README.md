@@ -137,9 +137,12 @@ Note that the client token should be served via a backend service but can be har
 
 ## Backend implementation
 For an overview of the braintree payment flow see https://developers.braintreepayments.com/start/overview
+
 This library covers the client setup here: https://developers.braintreepayments.com/start/hello-client
+
 It does NOT however cover the server portion here: https://developers.braintreepayments.com/start/hello-server
-You will need the server portion in order to complete your transactions
+
+You will need the server portion in order to complete your transactions.  See a simple example of this server in /exampleServer.  The example app is pointed to this on default
 
 ## Troubleshooting
 * Check native code logs (in xCode for iOS or `adb logcat *:E` for Android).  These may give additional information about issues

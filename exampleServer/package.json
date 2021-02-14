@@ -1,0 +1,12 @@
+{
+  "name": "paypalServer",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "braintree": "^3.2.1"
+  },
+  "devDependencies": {}
+}
