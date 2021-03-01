@@ -1,3 +1,4 @@
+// TODO: Remove and update declaration of PayPalSupportedCurrency
 export type paypalSupportedCurrencies =
     'AUD' |
     'BRL' |
@@ -25,6 +26,8 @@ export type paypalSupportedCurrencies =
     'CHF' |
     'THB' |
     'USD'
+
+// TODO: Remove and update declaration of PayPayLocaleCode
 export type paypalLocalCodes =
     'da_DK' |
     'de_DE' |
@@ -53,6 +56,9 @@ export type paypalLocalCodes =
     'zh_HK' |
     'zh_TW' |
     'zh_XC'
+
+export type PayPalSupportedCurrency = paypalSupportedCurrencies
+export type PayPalLocaleCode = paypalLocalCodes
 
 export interface PaypalResponse {
     nonce: string,
