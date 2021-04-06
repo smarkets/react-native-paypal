@@ -60,13 +60,25 @@ export type paypalLocalCodes =
 export type PayPalSupportedCurrency = paypalSupportedCurrencies
 export type PayPalLocaleCode = paypalLocalCodes
 
+export interface Address {
+    recipientName: string,
+    streetAddress: string,
+    extendedAddress: string,
+    locality: string,
+    countryCodeAlpha2: string,
+    postalCode: string,
+    region: string
+}
+
 export interface PaypalResponse {
     nonce: string,
     payerId: string,
     email: string,
     firstName: string,
     lastName: string,
-    phone: string
+    phone: string,
+    billingAddress: Address,
+    shippingAddress: Address
 }
 
 export interface DeviceDataResponse {
