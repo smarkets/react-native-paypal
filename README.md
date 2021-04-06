@@ -48,6 +48,24 @@ React Native library that implements PayPal [Checkout](https://developers.braint
 
 At this point you should be able to build both Android and iOS.
 
+#### Extra setup step 
+
+If your application ID has underscores in it (e.g. `com.example_app`), an additional setup step is required. Otherwise, you can skip this section.
+
+Inside `ApplicationManifest.xml` to add an `BraintreeBrowserSwitchActivity`. Specify the `android:scheme` to be your application id without underscores and `.braintree` appended to it:
+
+```xml
+<activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+  android:launchMode="singleTask">
+  <intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="com.exampleapp.braintree" />
+  </intent-filter>
+</activity>
+```
+
 ### Manual installation
 
 
