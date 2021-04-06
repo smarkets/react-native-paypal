@@ -17,6 +17,7 @@ import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
 import com.braintreepayments.api.models.PayPalAccountNonce;
 import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.braintreepayments.api.models.PostalAddress;
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -84,6 +85,18 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     PayPal.requestOneTimePayment(braintreeFragment, request);
   }
 
+  protected WritableMap postalAddressToMap(PostalAddress address) {
+    WritableMap result = Arguments.createMap();
+    result.putString("recipientName", address.getRecipientName());
+    result.putString("streetAddress", address.getStreetAddress());
+    result.putString("extendedAddress", address.getExtendedAddress());
+    result.putString("locality", address.getLocality());
+    result.putString("countryCodeAlpha2", address.getCountryCodeAlpha2());
+    result.putString("postalCode", address.getPostalCode());
+    result.putString("region", address.getRegion());
+    return result;
+  }
+
   protected BraintreeFragment initializeBraintreeFragment(
       String token) throws InvalidArgumentException {
     FragmentActivity activity = (FragmentActivity) getCurrentActivity();
@@ -113,6 +126,8 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
           result.putString("firstName", payPalAccountNonce.getFirstName());
           result.putString("lastName", payPalAccountNonce.getLastName());
           result.putString("phone", payPalAccountNonce.getPhone());
+          result.putMap("billingAddress", postalAddressToMap(payPalAccountNonce.getBillingAddress()));
+          result.putMap("shippingAddress", postalAddressToMap(payPalAccountNonce.getShippingAddress()));
         }
 
         promise.resolve(result);
