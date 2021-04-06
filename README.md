@@ -52,7 +52,7 @@ At this point you should be able to build both Android and iOS.
 
 If your application ID has underscores in it (e.g. `com.example_app`), an additional setup step is required. Otherwise, you can skip this section.
 
-Inside `ApplicationManifest.xml` to add an `BraintreeBrowserSwitchActivity`. Specify the `android:scheme` to be your application id without underscores and `.braintree` appended to it:
+Inside `ApplicationManifest.xml` add a `BraintreeBrowserSwitchActivity`. Specify the `android:scheme` to be your application id without underscores and `.braintree` appended to it:
 
 ```xml
 <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
