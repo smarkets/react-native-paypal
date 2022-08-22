@@ -92,6 +92,7 @@ declare function requestOneTimePayment(token: string, {
     shippingAddressRequired,
     userAction,
     intent,
+    offerPayLater,
 }: {
     amount: string,
     currency ? : paypalSupportedCurrencies,
@@ -99,6 +100,7 @@ declare function requestOneTimePayment(token: string, {
     shippingAddressRequired ? : boolean,
     userAction ? : 'commit' | 'continue',
     intent ? : 'sale' | 'authorize' | 'order',
+    offerPayLater ? : boolean,
 }): Promise <PaypalResponse> ;
 
 declare function requestBillingAgreement(token: string, {

@@ -120,7 +120,9 @@ const {
     shippingAddressRequired: false,
     userAction: 'commit', // display 'Pay Now' on the PayPal review page
     // one of 'authorize', 'sale', 'order'. defaults to 'authorize'. see details here: https://developer.paypal.com/docs/api/payments/v1/#payment-create-request-body
-    intent: 'authorize', 
+    intent: 'authorize',
+    // support pay later offers. see details here: https://developer.paypal.com/braintree/docs/guides/paypal/pay-later-offers/android/v3
+    offerPayLater: false, 
   }
 );
 
