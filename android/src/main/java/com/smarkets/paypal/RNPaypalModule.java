@@ -58,6 +58,8 @@ public class RNPaypalModule extends ReactContextBaseJavaModule implements Activi
     PayPalRequest request = new PayPalRequest(options.getString("amount"))
         .intent(PayPalRequest.INTENT_AUTHORIZE);
 
+    if (options.hasKey("offerPayLater"))
+        request.offerPayLater(options.getBoolean("offerPayLater"));
     if (options.hasKey("currency"))
         request.currencyCode(options.getString("currency"));
     if (options.hasKey("displayName"))

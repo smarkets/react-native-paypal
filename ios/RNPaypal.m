@@ -42,6 +42,8 @@ RCT_EXPORT_METHOD(
         payPalDriver.appSwitchDelegate = self;
 
         BTPayPalRequest *request= [[BTPayPalRequest alloc] initWithAmount:options[@"amount"]];
+        BOOL offerPayLater = [options[@"offerPayLater"] boolValue];
+        if (offerPayLater) request.offerPayLater = offerPayLater;
         NSString* currency = options[@"currency"];
         if (currency) request.currencyCode = currency;
         NSString* displayName = options[@"displayName"];
